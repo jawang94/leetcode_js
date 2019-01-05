@@ -15,30 +15,29 @@
 // Hide Tags Hash Table
 // Hide Similar Problems (M) Minimum Size Subarray Sum (E) Range Sum Query - Immutable
 
-
 /**
  * @param {number[]} nums
  * @param {number} k
  * @return {number}
  */
 var maxSubArrayLen = function(nums, k) {
-    var maxLen = 0;
-    var currSum = 0;
-    var dict = { 0: -1 };
-    
-    for(var i = 0; i < nums.length; i++) {
-        currSum += nums[i];
-        
-        // since we are looking for the maxlen, dict is used to store the very first
-        // location where currSum occurred      
-        if(dict[currSum] === undefined) {
-            dict[currSum] = i;
-        }
-        
-        if(dict[currSum - k] !== undefined) {
-            maxLen = Math.max(maxLen, i - dict[currSum - k]);
-        }
+  var maxLen = 0;
+  var currSum = 0;
+  var dict = { 0: -1 };
+
+  for (var i = 0; i < nums.length; i++) {
+    currSum += nums[i];
+
+    // since we are looking for the maxlen, dict is used to store the very first
+    // location where currSum occurred
+    if (dict[currSum] === undefined) {
+      dict[currSum] = i;
     }
-    
-    return maxLen;
+
+    if (dict[currSum - k] !== undefined) {
+      maxLen = Math.max(maxLen, i - dict[currSum - k]);
+    }
+  }
+
+  return maxLen;
 };

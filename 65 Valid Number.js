@@ -3,8 +3,6 @@
  * @return {boolean}
  */
 
-
-
 // valid cases
 // 9
 // .9
@@ -21,10 +19,8 @@
 // e9
 // .e1
 
-
-
 // cannot use (\d*\.?\d*)\d+
 
 var isNumber = function(s) {
-    return !!s.match(/^\s*[+-]?(\d+\.\d+|\d+\.|\.\d+|\d+)(\e[+-]?\d+)?\s*$/);
+  return !!s.match(/^\s*[+-]?(\d+\.\d+|\d+\.|\.\d+|\d+)(\e[+-]?\d+)?\s*$/);
 };

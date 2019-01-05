@@ -11,20 +11,20 @@
  * @return {string[]}
  */
 var generateAbbreviations = function(word) {
-    var result = [];
-    dfs(result, word, 0, '', 0);
-    return result;
+  var result = [];
+  dfs(result, word, 0, "", 0);
+  return result;
 };
 
 var dfs = function(result, word, pos, cur, count) {
-    if(pos === word.length) {
-        if(count > 0) {
-            cur += count;
-        }
-        result.push(cur);
-        return;
+  if (pos === word.length) {
+    if (count > 0) {
+      cur += count;
     }
-    
-    dfs(result, word, pos + 1, cur, count + 1);
-    dfs(result, word, pos + 1, cur + (count > 0 ? count : '') + word[pos], 0);
-}
+    result.push(cur);
+    return;
+  }
+
+  dfs(result, word, pos + 1, cur, count + 1);
+  dfs(result, word, pos + 1, cur + (count > 0 ? count : "") + word[pos], 0);
+};

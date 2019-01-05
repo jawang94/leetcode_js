@@ -1,7 +1,3 @@
-// Leetcode #160 
-// Language: Javascript
-// Problem: https://leetcode.com/problems/intersection-of-two-linked-lists/
-// Author: Chihung Yu
 /**
  * Definition for singly-linked list.
  * function ListNode(val) {
@@ -16,42 +12,42 @@
  * @return {ListNode}
  */
 var getIntersectionNode = function(headA, headB) {
-    var lenA = getLen(headA);
-    var lenB = getLen(headB);
-    
-    if(lenA === 0 || lenB === 0){
-        return null;
-    }
-    
-    while(lenA > lenB){
-        headA = headA.next;
-        lenA--;
-    }
-    
-    while(lenB > lenA){
-        headB = headB.next;
-        lenB--;
-    }
+  var lenA = getLen(headA);
+  var lenB = getLen(headB);
 
-    while(lenA && lenB){
-        if(headB === headA){
-            return headA;
-        }
-        
-        headA = headA.next;
-        headB = headB.next;
-    }
-
+  if (lenA === 0 || lenB === 0) {
     return null;
-};   
+  }
 
-var getLen = function(head){
-    var len = 0;
-    
-    while(head){
-        head = head.next;
-        len++;
+  while (lenA > lenB) {
+    headA = headA.next;
+    lenA--;
+  }
+
+  while (lenB > lenA) {
+    headB = headB.next;
+    lenB--;
+  }
+
+  while (lenA && lenB) {
+    if (headB === headA) {
+      return headA;
     }
-    
-    return len;
-}
+
+    headA = headA.next;
+    headB = headB.next;
+  }
+
+  return null;
+};
+
+var getLen = function(head) {
+  var len = 0;
+
+  while (head) {
+    head = head.next;
+    len++;
+  }
+
+  return len;
+};

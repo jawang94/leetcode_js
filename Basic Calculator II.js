@@ -17,67 +17,65 @@
 // Hide Tags String
 // Hide Similar Problems (H) Basic Calculator (H) Expression Add Operators
 
-
-
 /**
  * @param {string} s
  * @return {number}
  */
 var calculate = function(s) {
-    var values = [];
-    var ops = [];
-    
-    for(var i = 0; i < s.length; i++) {
-        var ch = s[i];
-        if(ch === ' ') {
-            continue;
-        }
-        
-        if(ch.match(/\d/)) {
-            var num = '';
-            while(i < s.length && s[i].match(/\d/)) {
-                num += s[i++];
-            }
-            values.push(parseInt(num));
-            i--;
-        } else if(ch === '-' || ch === '+' || ch === '*' || ch === '/') {
-            if(!hasPrecedence(ch, ops[ops.length - 1])) {
-                while(ops.length > 0 && !hasPrecedence(ch, ops[ops.length - 1])) {
-                    values.push(applyOp(values.pop(), values.pop(), ops.pop()));
-                }
-            }
-            ops.push(ch);
-        }
+  var values = [];
+  var ops = [];
+
+  for (var i = 0; i < s.length; i++) {
+    var ch = s[i];
+    if (ch === " ") {
+      continue;
     }
-    
-    while(ops.length > 0) {
-        values.push(applyOp(values.pop(), values.pop(), ops.pop()));
+
+    if (ch.match(/\d/)) {
+      var num = "";
+      while (i < s.length && s[i].match(/\d/)) {
+        num += s[i++];
+      }
+      values.push(parseInt(num));
+      i--;
+    } else if (ch === "-" || ch === "+" || ch === "*" || ch === "/") {
+      if (!hasPrecedence(ch, ops[ops.length - 1])) {
+        while (ops.length > 0 && !hasPrecedence(ch, ops[ops.length - 1])) {
+          values.push(applyOp(values.pop(), values.pop(), ops.pop()));
+        }
+      }
+      ops.push(ch);
     }
-    
-    return values.pop();
+  }
+
+  while (ops.length > 0) {
+    values.push(applyOp(values.pop(), values.pop(), ops.pop()));
+  }
+
+  return values.pop();
 };
 
 var hasPrecedence = function(op1, op2) {
-    var map = {
-        '-': 1,
-        '+': 1,
-        '/': 2,
-        '*': 2
-    }
-    
-    return map[op1] > map[op2];
-}
+  var map = {
+    "-": 1,
+    "+": 1,
+    "/": 2,
+    "*": 2
+  };
+
+  return map[op1] > map[op2];
+};
 
 var applyOp = function(v1, v2, op) {
-    if(op === '*') {
-        return v2*v1;
-    } else if(op === '-') {
-        return v2-v1;
-    } else if(op === '+') {
-        return v2+v1;
-    } else if(op === '/') {
-        return parseInt(v2/v1);
-    }
-}
+  if (op === "*") {
+    return v2 * v1;
+  } else if (op === "-") {
+    return v2 - v1;
+  } else if (op === "+") {
+    return v2 + v1;
+  } else if (op === "/") {
+    return parseInt(v2 / v1);
+  }
+};
 
 console.log(calculate("1+1+1*3*4/2+2*3"), eval("1+1+1*3*4/2+2*3"));

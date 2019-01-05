@@ -14,24 +14,22 @@
 // Hide Tags Array Hash Table
 // Hide Similar Problems (M) 3Sum (M) 4Sum (M) Two Sum II - Input array is sorted (E) Two Sum III - Data structure design
 
-
-
 /**
  * @param {number[]} nums
  * @param {number} target
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-    var hash = {};
-    
-    for(var i = 0; i < nums.length; i++) {
-        var num = nums[i];
-        if(hash[num] !== undefined) {
-            return [hash[num], i]
-        } else {
-            hash[target - num] = i;
-        }
+  var hash = {};
+
+  for (var i = 0; i < nums.length; i++) {
+    var num = nums[i];
+    if (hash[num] !== undefined) {
+      return [hash[num], i];
+    } else {
+      hash[target - num] = i;
     }
-    
-    return [];
+  }
+
+  return [];
 };

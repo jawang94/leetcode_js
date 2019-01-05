@@ -1,14 +1,13 @@
 // Hulu
 
-
 function parseHtml(htmlArr) {
   var context = [];
   var stack = [];
-  
-  for(var i = 0; i < htmlArr.length; i++){
+
+  for (var i = 0; i < htmlArr.length; i++) {
     var htmlTag = htmlArr[i];
-    
-    if(htmlTag[0] === '/'){
+
+    if (htmlTag[0] === "/") {
       context = stack.pop();
     } else {
       var map = {};
@@ -18,32 +17,28 @@ function parseHtml(htmlArr) {
       context = map[htmlTag];
     }
   }
-  
+
   return context;
 }
 
-
-
-
 var htmlArr = [
-  'html',
-  'body',
-  'div',
-  'a',
-  '/a',
-  '/div',
-  'div',
-  'a',
-  '/a',
-  '/div',
-  'div',
-  'a',
-  '/a',
-  '/div',
-  '/body',
-  '/html'
+  "html",
+  "body",
+  "div",
+  "a",
+  "/a",
+  "/div",
+  "div",
+  "a",
+  "/a",
+  "/div",
+  "div",
+  "a",
+  "/a",
+  "/div",
+  "/body",
+  "/html"
 ];
-
 
 console.log(parseHtml(htmlArr));
 // will generate
@@ -67,4 +62,3 @@ console.log(parseHtml(htmlArr));
   }]
 }]
 */
-

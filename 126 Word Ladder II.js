@@ -25,6 +25,4 @@
  *   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
  * @return {string[][]}
  */
-var findLadders = function(beginWord, endWord, wordList) {
-    
-};
+var findLadders = function(beginWord, endWord, wordList) {};

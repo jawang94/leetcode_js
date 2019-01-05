@@ -2,8 +2,7 @@
 
 // Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
 // Output: 7 -> 0 -> 8
-
-//  Amazon Microsoft Bloomberg Airbnb Adobe
+// Explanation: 342 + 465 = 807.
 
 /**
  * Definition for singly-linked list.
@@ -18,56 +17,28 @@
  * @return {ListNode}
  */
 
-
-
-// value reverse helps to asslign the first digit or both linklist
-
 var addTwoNumbers = function(l1, l2) {
-    if(l1 === null || l2 === null){
-        return l1 || l2;
+  let sum = 0;
+  let carry = 0;
+  let resultList = new ListNode(0);
+  let sumRunner = resultList;
+  let runnerOne = l1;
+  let runnerTwo = l2;
+  while (runnerOne != null || runnerTwo != null) {
+    if (runnerOne == null) {
+      runnerOne = new ListNode(0);
+    } else if (runnerTwo == null) {
+      runnerTwo = new ListNode(0);
     }
-    
-    var result = new ListNode(0);
-    var cur = result;
-    var p = l1;
-    var q = l2;
-    var carry = 0;
-    
-    while(p || q){
-        var qval;
-        var pval;
-        
-        if(q){
-            qval = q.val;
-            q = q.next;
-        } else {
-            qval = 0;
-        }
-        
-        if(p){
-            pval = p.val;
-            p = p.next;
-        } else {
-            pval = 0;
-        }
-        
-        var val = qval + pval + carry;
-        
-        if(val > 9){
-            carry = 1;
-            val %= 10;
-        } else {
-            carry = 0;
-        }
-        
-        cur.next = new ListNode(val);
-        cur = cur.next;
-    }
-    
-    if(carry !== 0){
-        cur.next = new ListNode(1);
-    }
-    
-    return result.next;
-    
+    sum = runnerOne.val + runnerTwo.val + carry;
+    carry = Math.floor(sum / 10);
+    sumRunner.next = new ListNode(sum % 10);
+    sumRunner = sumRunner.next;
+    runnerOne = runnerOne.next;
+    runnerTwo = runnerTwo.next;
+  }
+  if (carry > 0) {
+    sumRunner.next = new ListNode(carry);
+  }
+  return resultList.next;
 };

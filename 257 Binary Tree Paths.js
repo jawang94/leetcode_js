@@ -17,39 +17,39 @@
 // Hide Tags Tree Depth-first Search
 // Hide Similar Problems (M) Path Sum II
 
- /**
-  * Definition for a binary tree node.
-  * function TreeNode(val) {
-  *     this.val = val;
-  *     this.left = this.right = null;
-  * }
-  */
- /**
-  * @param {TreeNode} root
-  * @return {string[]}
-  */
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {string[]}
+ */
 
- var binaryTreePaths = function(root) {
-     var res = [];
-     
-     function dfs(node, curr, res) {
-         if(node === null) {
-             return;
-         }
-         
-         curr.push(node.val);
-         
-         if(node.left === null && node.right === null) {
-             res.push(curr.join('->'));
-         } else {
-             dfs(node.left, curr, res);
-             dfs(node.right, curr, res);
-         }
-         
-         curr.pop();
-     }
-     
-     dfs(root, [], res);
-     
-     return res;
- };
+var binaryTreePaths = function(root) {
+  var res = [];
+
+  function dfs(node, curr, res) {
+    if (node === null) {
+      return;
+    }
+
+    curr.push(node.val);
+
+    if (node.left === null && node.right === null) {
+      res.push(curr.join("->"));
+    } else {
+      dfs(node.left, curr, res);
+      dfs(node.right, curr, res);
+    }
+
+    curr.pop();
+  }
+
+  dfs(root, [], res);
+
+  return res;
+};

@@ -23,16 +23,16 @@
 // Hide Similar Problems (M) Implement Trie (Prefix Tree)
 
 function TrieNode(chr) {
-    this.val = chr;
-    this.isWord = false;
-    this.children = [];
+  this.val = chr;
+  this.isWord = false;
+  this.children = [];
 }
 
 /**
  * @constructor
  */
 var WordDictionary = function() {
-   this.root = new TrieNode(null, false);
+  this.root = new TrieNode(null, false);
 };
 
 /**
@@ -41,14 +41,14 @@ var WordDictionary = function() {
  * Adds a word into the data structure.
  */
 WordDictionary.prototype.addWord = function(word) {
-    var node = this.root;
-    for(var i = 0; i < word.length; i++) {
-        var chr = word[i];
-        node.children[chr] = node.children[chr] || new TrieNode(chr);
-        node = node.children[chr];
-    }
-    
-    node.isWord = true;
+  var node = this.root;
+  for (var i = 0; i < word.length; i++) {
+    var chr = word[i];
+    node.children[chr] = node.children[chr] || new TrieNode(chr);
+    node = node.children[chr];
+  }
+
+  node.isWord = true;
 };
 
 /**
@@ -58,29 +58,29 @@ WordDictionary.prototype.addWord = function(word) {
  * contain the dot character '.' to represent any one letter.
  */
 WordDictionary.prototype.search = function(word) {
-    var node = this.root;
-    
-    function dfs(node, word, i) {
-        if(i === word.length) {
-            return node.isWord;
-        }
-        
-        var chr = word[i];
-        
-        if(chr === '.') {
-            for(var key in node.children) {
-                if(dfs(node.children[key], word, i + 1)) {
-                    return true;
-                }
-            }
-        } else if(node.children[chr]) {
-            return dfs(node.children[chr], word, i + 1);
-        }
-        
-        return false;
+  var node = this.root;
+
+  function dfs(node, word, i) {
+    if (i === word.length) {
+      return node.isWord;
     }
-    
-    return dfs(node, word, 0);
+
+    var chr = word[i];
+
+    if (chr === ".") {
+      for (var key in node.children) {
+        if (dfs(node.children[key], word, i + 1)) {
+          return true;
+        }
+      }
+    } else if (node.children[chr]) {
+      return dfs(node.children[chr], word, i + 1);
+    }
+
+    return false;
+  }
+
+  return dfs(node, word, 0);
 };
 
 /**

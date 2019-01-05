@@ -9,7 +9,6 @@
 // Hide Tags Heap Greedy Sort
 // Hide Similar Problems (H) Merge Intervals (E) Meeting Rooms
 
-
 /**
  * Definition for an interval.
  * function Interval(start, end) {
@@ -23,32 +22,32 @@
  */
 
 var minMeetingRooms = function(intervals) {
-    var schedule = {};
-    
-    intervals.forEach((interval)=>{
-        schedule[interval.start] = schedule[interval.start] || 0;
-        schedule[interval.start]++;
-        
-        schedule[interval.end] = schedule[interval.end] || 0;
-        schedule[interval.end]--;
-    });
-    
-    var maxRooms = 0;
-    var rooms = 0;
-    
-    for(var i in schedule) {
-        rooms += schedule[i];
-        maxRooms = Math.max(maxRooms, rooms);
-    }
-    
-    return maxRooms;
+  var schedule = {};
+
+  intervals.forEach(interval => {
+    schedule[interval.start] = schedule[interval.start] || 0;
+    schedule[interval.start]++;
+
+    schedule[interval.end] = schedule[interval.end] || 0;
+    schedule[interval.end]--;
+  });
+
+  var maxRooms = 0;
+  var rooms = 0;
+
+  for (var i in schedule) {
+    rooms += schedule[i];
+    maxRooms = Math.max(maxRooms, rooms);
+  }
+
+  return maxRooms;
 };
 
 var data = [
-  {start: 9, end: 12},
-  {start: 2, end: 7},
-  {start: 5, end: 17},
-  {start: 12, end: 17},
-]
+  { start: 9, end: 12 },
+  { start: 2, end: 7 },
+  { start: 5, end: 17 },
+  { start: 12, end: 17 }
+];
 
 console.log(minMeetingRooms(data));

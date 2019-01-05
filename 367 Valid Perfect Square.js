@@ -17,25 +17,24 @@
 // Show Tags
 // Show Similar Problems
 
-
 /**
  * @param {number} num
  * @return {boolean}
  */
 var isPerfectSquare = function(num) {
-    var left = 0;
-    var right = num;
-    
-    while(left <= right) {
-        var mid = left + parseInt((right - left)/2);
-        var pow = mid*mid;
-        if(pow === num) {
-            return true;
-        } else if(pow < num) {
-            left = mid + 1;
-        } else {
-            right = mid - 1;
-        }
+  var left = 0;
+  var right = num;
+
+  while (left <= right) {
+    var mid = left + parseInt((right - left) / 2);
+    var pow = mid * mid;
+    if (pow === num) {
+      return true;
+    } else if (pow < num) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
     }
-    return false;  
+  }
+  return false;
 };

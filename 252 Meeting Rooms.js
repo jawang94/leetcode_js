@@ -8,7 +8,6 @@
 // Hide Tags Sort
 // Hide Similar Problems (H) Merge Intervals (M) Meeting Rooms II
 
-
 /**
  * Definition for an interval.
  * function Interval(start, end) {
@@ -23,35 +22,35 @@
 
 // 132 ms
 var canAttendMeetings = function(intervals) {
-    // sort by starting time
-    intervals.sort((interval1, interval2)=> interval1.start > interval2.start ? 1 : -1);
-    
-    for(var i = 1; i < intervals.length; i++) {
-        var pre = intervals[i-1];
-        var cur = intervals[i];
-        
-        if(pre.end > cur.start) {
-            return false;
-        }
+  // sort by starting time
+  intervals.sort((interval1, interval2) =>
+    interval1.start > interval2.start ? 1 : -1
+  );
+
+  for (var i = 1; i < intervals.length; i++) {
+    var pre = intervals[i - 1];
+    var cur = intervals[i];
+
+    if (pre.end > cur.start) {
+      return false;
     }
-    
-    return true;
+  }
+
+  return true;
 };
-
-
 
 // second attempt
 
 var canAttendMeetings = function(intervals) {
-    intervals.sort((a,b) => {
-        return a.start > b.start ? 1 : -1;
-    });
-    
-    for(var i = 1; i < intervals.length; i++) {
-        if(intervals[i - 1].end > intervals[i].start) {
-            return false;
-        }
+  intervals.sort((a, b) => {
+    return a.start > b.start ? 1 : -1;
+  });
+
+  for (var i = 1; i < intervals.length; i++) {
+    if (intervals[i - 1].end > intervals[i].start) {
+      return false;
     }
-    
-    return true;
+  }
+
+  return true;
 };

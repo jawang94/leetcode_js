@@ -15,20 +15,20 @@
  * @return {number}
  */
 
- // space O(1) time O(n)
+// space O(1) time O(n)
 var minCost = function(costs) {
-    if(!costs || costs.length === 0)   {
-        return 0;
-    }
-    
-    for(var i = 1; i < costs.length; i++) {
-        // The colors that can be painted depends on the color we used for the previous houses,
-        // pick the min cost from previous colors
-        costs[i][0] += Math.min(costs[i-1][1], costs[i-1][2]);
-        costs[i][1] += Math.min(costs[i-1][0], costs[i-1][2]);
-        costs[i][2] += Math.min(costs[i-1][0], costs[i-1][1]);
-    }
-    
-    i--;
-    return Math.min.apply(null, costs[i]);
+  if (!costs || costs.length === 0) {
+    return 0;
+  }
+
+  for (var i = 1; i < costs.length; i++) {
+    // The colors that can be painted depends on the color we used for the previous houses,
+    // pick the min cost from previous colors
+    costs[i][0] += Math.min(costs[i - 1][1], costs[i - 1][2]);
+    costs[i][1] += Math.min(costs[i - 1][0], costs[i - 1][2]);
+    costs[i][2] += Math.min(costs[i - 1][0], costs[i - 1][1]);
+  }
+
+  i--;
+  return Math.min.apply(null, costs[i]);
 };

@@ -12,14 +12,12 @@
 //   / \
 //  5   2
 //     / \
-//    3   1  
+//    3   1
 // confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
 
 // Hide Company Tags LinkedIn
 // Hide Tags Tree
 // Show Similar Problems
-
-
 
 /**
  * Definition for a binary tree node.
@@ -33,54 +31,53 @@
  * @return {TreeNode}
  */
 var upsideDownBinaryTree = function(root) {
-    var newRoot = root;
-    
-    generateUpsideDownHelper(root);
-    
-    function generateUpsideDownHelper(root) {
-        if(!root) {
-            return root;
-        }
-        
-        if(!root.left && !root.right) {
-            newRoot = root;
-            return root;
-        }
-    
-        if(root.left) {
-            var ret = generateUpsideDownHelper(root.left);
-            ret.left = root.right;
-            ret.right = root;
-            root.left = null;
-            root.right = null;
-        }
-        
-        return root;
-    }
-    return newRoot;
-};
+  var newRoot = root;
 
+  generateUpsideDownHelper(root);
+
+  function generateUpsideDownHelper(root) {
+    if (!root) {
+      return root;
+    }
+
+    if (!root.left && !root.right) {
+      newRoot = root;
+      return root;
+    }
+
+    if (root.left) {
+      var ret = generateUpsideDownHelper(root.left);
+      ret.left = root.right;
+      ret.right = root;
+      root.left = null;
+      root.right = null;
+    }
+
+    return root;
+  }
+  return newRoot;
+};
 
 // simpler solution
 var upsideDownBinaryTree = function(root) {
-    // second condition ensure the left most child will be the new root
-    if (!root || (!root.left && !root.right)) {
-        return root;
-    }
-    
-    let newRoot = upsideDownBinaryTree(root.left);
-    console.log(newRoot.val, root.left)
-    
-    root.left.left = root.right;
-    root.left.right = root;
+  // second condition ensure the left most child will be the new root
+  if (!root || (!root.left && !root.right)) {
+    return root;
+  }
 
-    // cannot work if we sub root.left with newRoot
-    // since new root is always the left most child
-    // [doesn't work] newRoot.left = root.right;
-    // [doesn't work] newRoot.right = root;
-    
-    root.left = null;
-    root.right = null;
-    
-    return newRoot;
+  let newRoot = upsideDownBinaryTree(root.left);
+  console.log(newRoot.val, root.left);
+
+  root.left.left = root.right;
+  root.left.right = root;
+
+  // cannot work if we sub root.left with newRoot
+  // since new root is always the left most child
+  // [doesn't work] newRoot.left = root.right;
+  // [doesn't work] newRoot.right = root;
+
+  root.left = null;
+  root.right = null;
+
+  return newRoot;
 };

@@ -1,206 +1,78 @@
+// Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
+
+// get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+// put(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
+
+// Follow up:
+// Could you do both operations in O(1) time complexity?
+
+// LRUCache cache = new LRUCache( 2 /* capacity */ );
+
+// cache.put(1, 1);
+// cache.put(2, 2);
+// cache.get(1);       // returns 1
+// cache.put(3, 3);    // evicts key 2
+// cache.get(2);       // returns -1 (not found)
+// cache.put(4, 4);    // evicts key 1
+// cache.get(1);       // returns -1 (not found)
+// cache.get(3);       // returns 3
+// cache.get(4);       // returns 4
+
 class Node {
-    constructor(key, val) {
-        this.key = key;
-        this.val = val;
-        this.next = null;
-        this.prev = null;
-    }
-}
-/**
- * @constructor
- */
-var LRUCache = function(capacity) {
-    this.list = null;
-    this.map = new Map();
-    this.head = null;
-    this.tail = null;
-    this.capacity = capacity;
-    this.curSize = 0;
-};
-
-/**
- * @param {number} key
- * @returns {number}
- */
-LRUCache.prototype.get = function(key) {
-    let node = this.map.get(key);
-    if (!node) {
-        return -1;
-    }
-    
-    if (node === this.head) {
-        return node.val;
-    }
-    
-    // remove node from list
-    if (node === this.tail) {
-        this.tail.prev.next = null;
-        this.tail = this.tail.prev;
-    } else {
-        node.prev.next = node.next;
-        node.next.prev = node.prev;
-    }
-    
-    // insert node to head
-    node.next = this.head;
-    this.head.prev = node;
-    this.head = node;
-    
-    return node.val;
-};
-
-/**
- * @param {number} key
- * @param {number} value
- * @returns {void}
- */
-LRUCache.prototype.set = function(key, value) {
-    let newNode = new Node(key, value);
-    
-    if (this.curSize === 0) {
-        this.tail = newNode;
-    } else {
-        newNode.next = this.head;
-        this.head.prev = newNode;
-    }
-    
-    this.head = newNode;
-    // this.curSize++;
-    
-    // update
-    if (this.map.get(key)) {
-        let oldNode = this.map.get(key);
-        
-        // remove node
-        if (oldNode === this.tail) {
-            this.tail = this.tail.prev;
-            this.tail.next = null;
-        } else {
-            oldNode.prev.next = oldNode.next;
-            oldNode.next.prev = oldNode.prev;
-        }
-    } else {
-        this.curSize++
-        if (this.curSize > this.capacity) {
-            //delete tail
-            this.map.delete(this.tail.key);
-            this.tail = this.tail.prev;
-            this.tail.next = null;
-            this.curSize--;
-        }
-    }
-    
-    this.map.set(key, newNode);
-};
-
-
-
-
-
-
-
-
-
-
-// Second Implementation
-
-
-function DoublyLinkListNode(key, value) {
+  constructor(key, value) {
     this.key = key;
     this.value = value;
-    this.prev = this.next = null;
+    this.prev = null;
+    this.next = null;
+  }
 }
 
-/**
- * @constructor
- */
-var LRUCache = function(capacity) {
-    this.head = this.tail = null;
-    this.maxCapacity = capacity;
-    this.currSize = 0;
-    this.hash = {};
-};
+class LRUCache {
+  constructor(capacity) {
+    this.capacity = capacity;
+    this.map = new Map();
+    this.head = new Node(0, 0);
+    this.tail = new Node(0, 0);
+    this.head.next = this.tail;
+    this.tail.prev = this.head;
+  }
 
-/**
- * @param {number} key
- * @returns {number}
- */
-LRUCache.prototype.get = function(key) {
-    if(!this.hash[key]) {
-        return -1;
+  get(key) {
+    if (this.map.has(key)) {
+      let node = this.map.get(key);
+      this._remove(node);
+      this._add(node);
+      return node.value;
     }
-    
-    this.moveToHead(key);
-    return this.hash[key].value;
-};
+    return -1;
+  }
 
-/**
- * @param {number} key
- * @param {number} value
- * @returns {void}
- */
-LRUCache.prototype.set = function(key, value) {
-    if(this.maxCapacity <= 0) {
-        return;
+  put(key, value) {
+    if (this.map.has(key)) {
+      this._remove(this.map.get(key));
     }
+    let node = new Node(key, value);
+    this._add(node);
+    this.map.set(key, node);
+    if (this.map.size > this.capacity) {
+      node = this.head.next;
+      this._remove(node);
+      this.map.delete(node.key);
+    }
+  }
 
-    if(!this.hash[key]) {
+  _add(node) {
+    let prev = this.tail.prev;
+    prev.next = node;
+    this.tail.prev = node;
+    node.prev = prev;
+    node.next = this.tail;
+  }
 
-        if(this.currSize === this.maxCapacity) {
-            this.removeLast();
-            this.currSize--;
-        }
-        
-        this.hash[key] = new DoublyLinkListNode(key, value);
-        this.currSize++;
-    }
-    
-    this.hash[key].value = value;
-    this.moveToHead(key);
-};
-
-LRUCache.prototype.removeLast = function() { 
-    if(this.tail === null) {
-        return;
-    }
-
-    delete this.hash[this.tail.key];
-    var newTail = this.tail.prev;
-
-    if(newTail === null) {
-        this.head = this.tail = null;
-        return;
-    }
-
-    this.tail.prev = null;
-    newTail.next = null;
-    this.tail = newTail;
-}
-
-LRUCache.prototype.moveToHead = function(key) {
-    var newHead = this.hash[key];
-    
-    if(this.head === null && this.tail === null) {
-        this.head = this.tail = newHead;
-    }
-
-    if(newHead === this.head) {
-        return;
-    }
-    
-    if(newHead === this.tail) {
-        this.tail = newHead.prev;
-    }
-    
-    if(newHead.prev) {
-        newHead.prev.next = newHead.next;    
-    }
-    if(newHead.next) {
-        newHead.next.prev = newHead.prev;    
-    }
-    
-    newHead.prev = null;
-    newHead.next = this.head;
-    this.head.prev = newHead;
-    this.head = newHead;
+  _remove(node) {
+    let prev = node.prev;
+    let next = node.next;
+    prev.next = next;
+    next.prev = prev;
+  }
 }

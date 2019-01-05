@@ -14,32 +14,31 @@
  * @return {number}
  */
 var evalRPN = function(tokens) {
-    var stack = [];
-    
-    for(var i = 0; i < tokens.length; i++) {
-        var token = tokens[i];
-        var val1,val2;
-        var val = parseInt(token);
-        if(!isNaN(val)) {
-            stack.push(val);
-        } else {
-            val2 = stack.pop();
-            val1 = stack.pop();
-            
-            if(token === '*') {
-                stack.push(parseInt(val1 * val2));
-            } else if(token === '/') {
-                stack.push(parseInt(val1 / val2));
-            } else if(token === '-') {
-                stack.push(val1 - val2);
-            } else if(token === '+') {
-                stack.push(val1 + val2);
-            }
-        }
+  var stack = [];
+
+  for (var i = 0; i < tokens.length; i++) {
+    var token = tokens[i];
+    var val1, val2;
+    var val = parseInt(token);
+    if (!isNaN(val)) {
+      stack.push(val);
+    } else {
+      val2 = stack.pop();
+      val1 = stack.pop();
+
+      if (token === "*") {
+        stack.push(parseInt(val1 * val2));
+      } else if (token === "/") {
+        stack.push(parseInt(val1 / val2));
+      } else if (token === "-") {
+        stack.push(val1 - val2);
+      } else if (token === "+") {
+        stack.push(val1 + val2);
+      }
     }
-    
-    return stack.pop();
+  }
+
+  return stack.pop();
 };
 
-
-console.log(evalRPN([ 12, 12, 12, '*', '+', 3, 4, '-', '+' ] ));
+console.log(evalRPN([12, 12, 12, "*", "+", 3, 4, "-", "+"]));

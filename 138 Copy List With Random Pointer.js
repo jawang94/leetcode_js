@@ -6,7 +6,6 @@
 // Show Tags
 // Show Similar Problems
 
-
 /**
  * Definition for singly-linked list with a random pointer.
  * function RandomListNode(label) {
@@ -19,28 +18,40 @@
  * @param {RandomListNode} head
  * @return {RandomListNode}
  */
+
 var copyRandomList = function(head) {
-  var hashMap = {};
-  var newHead = new RandomListNode(0);
-  newHead.next = copyList(head);
-  
-  function copyList(node)   {
-    if(node === null) {
-        return node;
-    }
-      
-    if(hashMap[node.label]) {
-        return hashMap[node.label];
-    }
-    
-    var newNode = new RandomListNode(node.label);
-    hashMap[node.label] = newNode;
-    
-    newNode.next = copyList(node.next);
-    newNode.random = copyList(node.random);
-    
-    return newNode;
+  if (!head) return null;
+
+  let runner = head;
+  while (runner) {
+    let cloneNode = new RandomListNode(runner.label);
+    cloneNode.next = runner.next;
+    runner.next = cloneNode;
+    runner = cloneNode.next;
   }
-  
-  return newHead.next;
+
+  runner = head;
+  while (runner) {
+    if (runner.random) {
+      runner.next.random = runner.random.next;
+    } else {
+      runner.next.random = null;
+    }
+    runner = runner.next.next;
+  }
+
+  let originalRunner = head;
+  let cloneRunner = head.next;
+  let cloneHead = head.next;
+  while (originalRunner) {
+    originalRunner.next = originalRunner.next.next;
+    if (cloneRunner.next) {
+      cloneRunner.next = cloneRunner.next.next;
+    } else {
+      cloneRunner.next = null;
+    }
+    originalRunner = originalRunner.next;
+    cloneRunner = cloneRunner.next;
+  }
+  return cloneHead;
 };

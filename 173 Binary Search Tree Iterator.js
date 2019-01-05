@@ -11,8 +11,6 @@
 // Hide Tags Tree Stack Design
 // Hide Similar Problems (M) Binary Tree Inorder Traversal (M) Flatten 2D Vector (M) Zigzag Iterator (M) Peeking Iterator (M) Inorder Successor in BST
 
-
-
 /**
  * Definition for binary tree
  * function TreeNode(val) {
@@ -26,17 +24,16 @@
  * @param {TreeNode} root - root of the binary search tree
  */
 var BSTIterator = function(root) {
-    this.stack = [];
-    this.pushLeft(root);
+  this.stack = [];
+  this.pushLeft(root);
 };
-
 
 /**
  * @this BSTIterator
  * @returns {boolean} - whether we have a next smallest number
  */
 BSTIterator.prototype.hasNext = function() {
-    return this.stack.length !== 0;
+  return this.stack.length !== 0;
 };
 
 /**
@@ -44,26 +41,26 @@ BSTIterator.prototype.hasNext = function() {
  * @returns {number} - the next smallest number
  */
 BSTIterator.prototype.next = function() {
-    if(this.hasNext()) {
-        var node = this.stack.pop();
-        
-        if(node.right) {
-            this.pushLeft(node.right);
-        }
-        
-        return node.val;
+  if (this.hasNext()) {
+    var node = this.stack.pop();
+
+    if (node.right) {
+      this.pushLeft(node.right);
     }
+
+    return node.val;
+  }
 };
 
 BSTIterator.prototype.pushLeft = function(node) {
-    while(node) {
-        this.stack.push(node);
-        node = node.left;
-    }
-}
+  while (node) {
+    this.stack.push(node);
+    node = node.left;
+  }
+};
 
 /**
  * Your BSTIterator will be called like this:
  * var i = new BSTIterator(root), a = [];
  * while (i.hasNext()) a.push(i.next());
-*/
+ */

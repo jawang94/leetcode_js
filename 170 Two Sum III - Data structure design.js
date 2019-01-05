@@ -3,7 +3,7 @@
  * @constructor
  */
 var TwoSum = function() {
-    this.hashmap = new Map();
+  this.hashmap = new Map();
 };
 
 /**
@@ -12,8 +12,8 @@ var TwoSum = function() {
  * @returns {void}
  */
 TwoSum.prototype.add = function(input) {
-    this.hashmap[input] = this.hashmap[input] || 0;
-    this.hashmap[input]++;
+  this.hashmap[input] = this.hashmap[input] || 0;
+  this.hashmap[input]++;
 };
 
 /**
@@ -21,20 +21,20 @@ TwoSum.prototype.add = function(input) {
  * @param {number} val
  * @returns {boolean}
  */
-TwoSum.prototype.find = function(val) {  
-    for(var key in this.hashmap) {
-        var diff = val - parseInt(key);
+TwoSum.prototype.find = function(val) {
+  for (var key in this.hashmap) {
+    var diff = val - parseInt(key);
 
-        if(diff === parseInt(key)){
-          if(this.hashmap[diff] >= 2) {
-            return true;
-          }
-        } else if(this.hashmap[diff] >= 1) {
-            return true;
-        }
+    if (diff === parseInt(key)) {
+      if (this.hashmap[diff] >= 2) {
+        return true;
+      }
+    } else if (this.hashmap[diff] >= 1) {
+      return true;
     }
-    
-    return false;
+  }
+
+  return false;
 };
 
 /**
