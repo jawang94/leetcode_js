@@ -41,3 +41,39 @@ var mergeTwoLists = function(l1, l2) {
 
   return fn.next;
 };
+
+// Not Refactored yet
+var mergeTwoLists = function(l1, l2) {
+  if (!l1) return l2;
+  else if (!l2) return l1;
+
+  let r1 = l1;
+  let r2 = l2;
+  if (r1.val <= r2.val) {
+    var prev = l1;
+    if (r1.next != null) r1 = r1.next;
+    var head = prev;
+  } else {
+    var prev = l2;
+    if (r2.next != null) r2 = r2.next;
+    var head = prev;
+  }
+
+  while (r1 != null && r2 != null) {
+    if (r1.val <= r2.val) {
+      let temp = r1;
+      r1 = r1.next;
+      prev.next = temp;
+      prev = temp;
+    } else {
+      let temp = r2;
+      r2 = r2.next;
+      prev.next = temp;
+      prev = temp;
+    }
+  }
+  if (r2 === null) prev.next = r1;
+  else prev.next = r2;
+
+  return head;
+};
