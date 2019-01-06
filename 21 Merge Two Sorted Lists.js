@@ -42,7 +42,7 @@ var mergeTwoLists = function(l1, l2) {
   return fn.next;
 };
 
-// Not Refactored yet, FASTER THAN 100% OF JS SOLUTIONS IN 60MS
+// Slightly Refactored, FASTER THAN 100% OF JS SOLUTIONS IN 60MS
 var mergeTwoLists = function(l1, l2) {
   if (!l1) return l2;
   else if (!l2) return l1;
@@ -71,8 +71,7 @@ var mergeTwoLists = function(l1, l2) {
       prev = temp;
     }
   }
-  if (r2 === null) prev.next = r1;
-  else prev.next = r2;
+  prev.next = r1 || r2;
 
   return head;
 };
