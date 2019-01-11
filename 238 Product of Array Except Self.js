@@ -28,3 +28,41 @@ var productExceptSelf = function(nums) {
 
   return output;
 };
+
+// Ratchet solution using division in ~108ms
+var productExceptSelf = function(nums) {
+  let result = [];
+  let product = 1;
+  let hasZero = false;
+  for (var i = 0; i < nums.length; i++) {
+    if (nums[i] === 0) {
+      product = 0;
+      hasZero = true;
+      break;
+    } else {
+      product *= nums[i];
+    }
+  }
+  nums.forEach(e => {
+    if (e != 0 && hasZero) {
+      result.push(0);
+    } else if (e != 0 && !hasZero) {
+      result.push(product / e);
+    } else {
+      let temp = 1;
+      let count = 0;
+      nums.forEach(ex => {
+        if (ex != 0) {
+          temp *= ex;
+        } else {
+          count++;
+        }
+      });
+      if (count > 1) {
+        temp = 0;
+      }
+      result.push(temp);
+    }
+  });
+  return result;
+};
