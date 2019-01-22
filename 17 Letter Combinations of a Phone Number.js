@@ -52,3 +52,36 @@ var letterCombinations = function(digits) {
   dfs(digits, 0, "");
   return res;
 };
+
+// Ratchet 13% solution, pre re-factor
+/**
+ * @param {string} digits
+ * @return {string[]}
+ */
+var letterCombinations = function(digits) {
+  if (digits.length < 1) return [];
+  const phoneBook = {
+    "2": ["a", "b", "c"],
+    "3": ["d", "e", "f"],
+    "4": ["g", "h", "i"],
+    "5": ["j", "k", "l"],
+    "6": ["m", "n", "o"],
+    "7": ["p", "q", "r", "s"],
+    "8": ["t", "u", "v"],
+    "9": ["w", "x", "y", "z"]
+  };
+  if (digits.length === 1) return phoneBook[digits[0]];
+
+  let result = [""];
+  for (var i = 0; i < digits.length; i++) {
+    let tempArr = [];
+    while (result.length) {
+      let tempStr = result.shift();
+      for (let letter of phoneBook[digits[i]]) {
+        tempArr.push(tempStr + letter);
+      }
+    }
+    result = tempArr.slice();
+  }
+  return result;
+};
