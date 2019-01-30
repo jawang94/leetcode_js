@@ -5,6 +5,7 @@
  *   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
  * @return {boolean}
  */
+// Solution w/o memo. Straight iteratively n^2
 var wordBreak = function(s, wordDict) {
   if (wordDict === null || wordDict.size === 0) {
     return false;
