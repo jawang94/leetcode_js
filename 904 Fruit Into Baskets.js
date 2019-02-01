@@ -39,6 +39,7 @@
 // 1 <= tree.length <= 40000
 // 0 <= tree[i] < tree.length
 
+// JS sliding window solutions faster than ~61%
 /**
  * @param {number[]} tree
  * @return {number}
