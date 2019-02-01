@@ -91,3 +91,41 @@ function findKth(nums1, start1, nums2, start2, kth) {
     return nums1[start1 + part1 - 1];
   }
 }
+
+// Merge Sort solution faster than 21% of solutions...
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number}
+ */
+var findMedianSortedArrays = function(nums1, nums2) {
+  let arr = nums1.concat(nums2);
+  let sortedArr = mergeSort(arr);
+
+  if (sortedArr.length % 2 === 0) {
+    let mid = Math.floor(sortedArr.length / 2);
+    return (sortedArr[mid] + sortedArr[mid - 1]) / 2;
+  } else {
+    let mid = Math.floor(sortedArr.length / 2);
+    return sortedArr[mid];
+  }
+};
+
+let mergeSort = arr => {
+  if (arr.length < 2) return arr;
+
+  let left = mergeSort(arr.slice(0, arr.length / 2));
+  let right = mergeSort(arr.slice(arr.length / 2));
+
+  return merge(left, right);
+};
+
+let merge = (left, right) => {
+  let result = [];
+
+  while (left.length > 0 && right.length > 0) {
+    result.push(left[0] < right[0] ? left.shift() : right.shift());
+  }
+
+  return result.concat(left.length ? left : right);
+};
