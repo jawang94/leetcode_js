@@ -29,3 +29,12 @@ var reverseList = function(head) {
   curr.next = prev;
   return curr;
 };
+
+// Recursive solution faster than ~94.85%
+var reverseList = head => {
+  if (head === null || head.next === null) return head;
+  let p = reverseList(head.next);
+  head.next.next = head;
+  head.next = null;
+  return p;
+};
