@@ -44,3 +44,19 @@ var merge = function(intervals) {
 
   return res;
 };
+
+// WhilePop() Solution faster than ~94.05% of solutions
+var merge = function(intervals) {
+  let output = [];
+  intervals.sort((a, b) => { return b.start - a.start; })
+  
+  while(intervals.length > 0) {
+    let current = intervals.pop();
+    while(intervals.length > 0 && intervals[intervals.length - 1].start <= current.end) {
+      let next = intervals.pop();
+      current.end = Math.max(next.end, current.end);
+    }
+    output.push(current)
+  }
+  return output
+};
