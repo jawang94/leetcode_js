@@ -9,26 +9,24 @@
 // canConstruct("aa", "ab") -> false
 // canConstruct("aa", "aab") -> true
 
-// Ratchet solution BRUTE FORCE faster than ~10%...
+// Refactored BRUTE FORCE faster than ~14%...
 /**
  * @param {string} ransomNote
  * @param {string} magazine
  * @return {boolean}
  */
 var canConstruct = function(ransomNote, magazine) {
-  let myMap = new Map();
+  let myDict = {};
   for (var i = 0; i < magazine.length; i++) {
-    if (!myMap.has(magazine[i])) myMap.set(magazine[i], 1);
-    else if (myMap.has(magazine[i]))
-      myMap.set(magazine[i], myMap.get(magazine[i]) + 1);
+    if (!myDict[magazine[i]]) myDict[magazine[i]] = 1;
+    else if (myDict[magazine[i]]) myDict[magazine[i]] += 1;
   }
   let ransomTemp = ransomNote;
   for (var j = ransomTemp.length - 1; j > -1 && ransomTemp.length > 0; j--) {
-    if (myMap.has(ransomTemp[j]) && myMap.get(ransomTemp[j]) != 0)
-      myMap.set(ransomTemp[j], myMap.get(ransomTemp[j]) - 1);
-    else if (myMap.has(ransomTemp[j]) && myMap.get(ransomTemp[j]) === 0)
-      return false;
-    else if (!myMap.has(ransomTemp[j])) return false;
+    if (myDict[ransomTemp[j]] && myDict[ransomTemp[j]] != 0)
+      myDict[ransomTemp[j]] -= 1;
+    else if (myDict[ransomTemp[j]] && myDict[ransomTemp[j]] === 0) return false;
+    else if (!myDict[ransomTemp[j]]) return false;
   }
   return true;
 };
