@@ -75,3 +75,50 @@ var removeInvalidParentheses = function(s) {
 
   return res;
 };
+
+// Recursive backtracking approach 76ms faster than ~80%
+const removeInvalidParentheses = s => {
+  let output = [];
+
+  let left = 0;
+  let right = 0;
+  for (var i = 0; i < s.length; i++) {
+    if (s[i] === "(") left++;
+    else if (s[i] === ")") {
+      if (left === 0) right++;
+      if (left > 0) left--;
+    }
+  }
+
+  const recurse = (input, index, lCount, rCount, lExtra, rExtra, current) => {
+    if (index === input.length) {
+      if (lExtra === 0 && rExtra === 0) {
+        if (!output.includes(current)) output.push(current);
+      }
+    } else {
+      let e = input[index];
+      if ((lExtra > 0 && e === "(") || (rExtra > 0 && e === ")")) {
+        recurse(
+          input,
+          index + 1,
+          lCount,
+          rCount,
+          lExtra - (e === "(" ? 1 : 0),
+          rExtra - (e === ")" ? 1 : 0),
+          current
+        );
+      }
+      current = current + e;
+      if (e != "(" && e != ")") {
+        recurse(input, index + 1, lCount, rCount, lExtra, rExtra, current);
+      } else if (e === "(") {
+        recurse(input, index + 1, lCount + 1, rCount, lExtra, rExtra, current);
+      } else if (e === ")" && rCount < lCount) {
+        recurse(input, index + 1, lCount, rCount + 1, lExtra, rExtra, current);
+      }
+    }
+  };
+
+  recurse(s, 0, 0, 0, left, right, "");
+  return output;
+};
