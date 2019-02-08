@@ -64,3 +64,40 @@ BSTIterator.prototype.pushLeft = function(node) {
  * var i = new BSTIterator(root), a = [];
  * while (i.hasNext()) a.push(i.next());
  */
+
+// Reverse In Order Traversal, pre-generating list of values. Faster than ~24%.
+var BSTIterator = function(root) {
+  this.nodeStack = [];
+  this.reverseInOrderTraversal(root);
+};
+
+BSTIterator.prototype.reverseInOrderTraversal = function(node) {
+  if (node === null) return;
+  if (node.right) this.reverseInOrderTraversal(node.right);
+  this.nodeStack.push(node.val);
+  if (node.left) this.reverseInOrderTraversal(node.left);
+};
+
+/**
+ * @return the next smallest number
+ * @return {number}
+ */
+BSTIterator.prototype.next = function() {
+  return this.nodeStack.pop();
+};
+
+/**
+ * @return whether we have a next smallest number
+ * @return {boolean}
+ */
+BSTIterator.prototype.hasNext = function() {
+  if (this.nodeStack.length > 0) return true;
+  else return false;
+};
+
+/**
+ * Your BSTIterator object will be instantiated and called as such:
+ * var obj = Object.create(BSTIterator).createNew(root)
+ * var param_1 = obj.next()
+ * var param_2 = obj.hasNext()
+ */
