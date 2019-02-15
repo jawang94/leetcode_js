@@ -19,17 +19,35 @@
  * @param {number} target
  * @return {number[]}
  */
+// Brute force O(N^2) time
+// var twoSum = function(nums, target) {
+//     if (nums.length < 1) return false;
+//     for (var i = 0; i < nums.length; i++) {
+//         for (var j = 0; j < nums.length && j != i; j++) {
+//             if (nums[i] + nums[j] === target) return (i < j ? [i, j] : [j, i]);
+//         }
+//     }
+//     return false;
+// };
+
+// Optimized solution
 var twoSum = function(nums, target) {
-  var hash = {};
-
+  let myHash = {};
   for (var i = 0; i < nums.length; i++) {
-    var num = nums[i];
-    if (hash[num] !== undefined) {
-      return [hash[num], i];
-    } else {
-      hash[target - num] = i;
-    }
+    let addend = target - nums[i];
+    if (addend in myHash) return [myHash[addend], i];
+    myHash[nums[i]] = i;
   }
-
-  return [];
+  return false;
 };
+
+// Map possibly faster? Nope
+// var twoSum = function(nums, target) {
+//     let myMap = new Map();
+//     for (var i = 0; i < nums.length; i++) {
+//         let addend = target - nums[i];
+//         if (myMap.has(addend)) return [myMap.get(addend), i];
+//         myMap.set(nums[i], i);
+//     }
+//     return false;
+// }
