@@ -100,22 +100,23 @@ function findKth(nums1, start1, nums2, start2, kth) {
  */
 var findMedianSortedArrays = function(nums1, nums2) {
   let arr = nums1.concat(nums2);
-  let sortedArr = mergeSort(arr);
+  arr = mergeSort(arr);
 
-  if (sortedArr.length % 2 === 0) {
-    let mid = Math.floor(sortedArr.length / 2);
-    return (sortedArr[mid] + sortedArr[mid - 1]) / 2;
+  if (arr.length % 2 === 0) {
+    let mid = Math.floor(arr.length / 2);
+    return (arr[mid] + arr[mid - 1]) / 2;
   } else {
-    let mid = Math.floor(sortedArr.length / 2);
-    return sortedArr[mid];
+    let mid = Math.floor(arr.length / 2);
+    return arr[mid];
   }
 };
 
 let mergeSort = arr => {
   if (arr.length < 2) return arr;
 
-  let left = mergeSort(arr.slice(0, arr.length / 2));
-  let right = mergeSort(arr.slice(arr.length / 2));
+  let mid = Math.floor(arr.length / 2);
+  let left = mergeSort(arr.slice(0, mid));
+  let right = mergeSort(arr.slice(mid));
 
   return merge(left, right);
 };
@@ -127,5 +128,5 @@ let merge = (left, right) => {
     result.push(left[0] < right[0] ? left.shift() : right.shift());
   }
 
-  return result.concat(left.length ? left : right);
+  return result.concat(left.length > 0 ? left : right);
 };
