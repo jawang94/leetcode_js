@@ -2,17 +2,17 @@
  * @param {string} s
  * @return {number}
  */
-
+// 100ms faster than ~79.85%
 var lengthOfLongestSubstring = function(s) {
-  const n = s.length;
-  var map = new Map();
-  var count = 0;
-  for (var i = 0, j = 0; j < n; j++) {
-    if (map.has(s[j])) {
-      i = Math.max(map.get(s[j]), i);
+  let count = 0;
+  let letterMap = new Map();
+  for (var spacer = 0, current = 0; current < s.length; current++) {
+    let letter = s[current];
+    if (letterMap.has(letter)) {
+      spacer = Math.max(letterMap.get(letter), spacer);
     }
-    map.set(s[j], j + 1);
-    count = Math.max(count, j - i + 1);
+    letterMap.set(letter, current + 1);
+    count = Math.max(count, current - spacer + 1);
   }
   return count;
 };
