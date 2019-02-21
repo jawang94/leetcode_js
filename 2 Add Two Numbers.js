@@ -12,33 +12,39 @@
  * }
  */
 /**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
  * @param {ListNode} l1
  * @param {ListNode} l2
  * @return {ListNode}
  */
-
+// 140ms faster than ~54% and memory less than ~78%. Not sure how to optimize further.
 var addTwoNumbers = function(l1, l2) {
-  let sum = 0;
-  let carry = 0;
-  let resultList = new ListNode(0);
-  let sumRunner = resultList;
-  let runnerOne = l1;
-  let runnerTwo = l2;
-  while (runnerOne != null || runnerTwo != null) {
-    if (runnerOne == null) {
-      runnerOne = new ListNode(0);
-    } else if (runnerTwo == null) {
-      runnerTwo = new ListNode(0);
+  let sumList = new ListNode(0),
+    emptyNode = new ListNode(0);
+  let carry = 0,
+    sum = 0;
+  let sumRunner = sumList;
+
+  while (l1 != null || l2 != null) {
+    if (l1 === null && l2 != null) l1 = emptyNode;
+    else if (l2 === null && l1 != null) l2 = emptyNode;
+    else {
+      sum = l1.val + l2.val + carry;
+      carry = Math.floor(sum / 10);
+      sumRunner.next = new ListNode(sum % 10);
+      sumRunner = sumRunner.next;
+      l1 = l1.next;
+      l2 = l2.next;
     }
-    sum = runnerOne.val + runnerTwo.val + carry;
-    carry = Math.floor(sum / 10);
-    sumRunner.next = new ListNode(sum % 10);
-    sumRunner = sumRunner.next;
-    runnerOne = runnerOne.next;
-    runnerTwo = runnerTwo.next;
   }
-  if (carry > 0) {
-    sumRunner.next = new ListNode(carry);
-  }
-  return resultList.next;
+
+  if (carry > 0) sumRunner.next = new ListNode(carry);
+
+  return sumList.next;
 };
