@@ -32,6 +32,7 @@ function swimInWater(grid) {
 function Heap(compare = (a, b) => a - b) {
   const arr = [];
   return { push, pop, peek, size };
+
   function size() {
     return arr.length;
   }
