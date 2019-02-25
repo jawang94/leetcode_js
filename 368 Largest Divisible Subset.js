@@ -65,3 +65,36 @@ var largestDivisibleSubset = function(nums) {
 
   return result;
 };
+
+// var largestDivisibleSubset = function(nums, count = 0, max = []) {
+//     if (nums.length <= 1) return max;
+//     let subset = [];
+//     let maxSubset = max;
+//     let status = false;
+
+//     subset.push(nums[0]);
+
+//     if (count === nums.length - 1) return maxSubset;
+//     for (var i = 1; i < nums.length; i++) {
+//         for (var j = 0; j < subset.length; j++) {
+//             if (status = false) break;
+//             if (nums[i] % subset[j] === 0 || subset[j] % nums[i] === 0) {
+//                 if (subset.indexOf(nums[i]) > -1) {
+//                     status = false;
+//                 }
+//                 else status = true;
+//             } else {
+//                 status = false;
+//                 break;
+//             }
+//         }
+//         if (status === true) subset.push(nums[i]);
+//     }
+//     if (subset.length > maxSubset.length) maxSubset = subset;
+
+//     let temp = nums[0];
+//     nums.shift();
+//     nums.push(temp);
+
+//     return largestDivisibleSubset(nums, count + 1, maxSubset);
+// };
