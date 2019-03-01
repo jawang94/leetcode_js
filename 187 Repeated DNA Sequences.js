@@ -15,23 +15,6 @@
  * @param {string} s
  * @return {string[]}
  */
-var findRepeatedDnaSequences = function(s) {
-  var hash = {};
-  var result = [];
-
-  for (var i = 10; i <= s.length; i++) {
-    var substr = s.substring(i - 10, i);
-    if (hash[substr] === undefined) {
-      hash[substr] = 1;
-    } else if (hash[substr] === 1) {
-      hash[substr]++;
-      result.push(substr);
-    }
-  }
-
-  return result;
-};
-
 // 84ms faster than 96.50% of solutions
 var findRepeatedDnaSequences = function(s) {
   let store = new Set(),
