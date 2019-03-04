@@ -88,3 +88,47 @@ var fourSum = function(nums, target) {
 
   return ret;
 };
+
+// Refactored final solution
+const fourSum = (nums, target) => {
+  let result = [];
+
+  if (nums.length == 0) return result;
+
+  nums.sort(function(a, b) {
+    return a - b;
+  });
+
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      let newTarget = target - (nums[i] + nums[j]);
+
+      let front = j + 1;
+      let back = nums.length - 1;
+
+      while (front < back) {
+        let sum = nums[front] + nums[back];
+
+        if (sum < newTarget) ++front;
+        else if (sum > newTarget) --back;
+        else {
+          let frontMarker = nums[front];
+          let backMarker = nums[back];
+
+          result.push([nums[i], nums[j], frontMarker, backMarker]);
+          front++;
+          back--;
+
+          while (front < back && nums[front] === frontMarker) ++front;
+          while (front < back && nums[back] === backMarker) --back;
+        }
+      }
+
+      while (j + 1 < nums.length && nums[j + 1] === nums[j]) ++j;
+    }
+
+    while (i + 1 < nums.length && nums[i + 1] === nums[i]) ++i;
+  }
+
+  return result;
+};
