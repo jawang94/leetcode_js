@@ -122,3 +122,38 @@ const removeInvalidParentheses = s => {
   recurse(s, 0, 0, 0, left, right, "");
   return output;
 };
+
+// Refactored backtrack 64ms faster than ~89.46% & 36.6MB less than ~86.36%
+const removeInvalidParentheses = s => {
+  let output = [];
+  let left = 0;
+  let right = 0;
+  
+  for (let i = 0; i < s.length; ++i) {
+      if (s[i] === "(") ++left;
+      else if (s[i] === ")") {
+          if (left === 0) ++right;
+          if (left > 0) --left;
+      }
+  }
+  
+  const recursiveSearch = (input, index, leftCount, rightCount, leftExtra, rightExtra, current) => {
+      if (index === input.length) {
+          if (leftExtra === 0 && rightExtra === 0) {
+              if (!output.includes(current)) output.push(current);
+          }
+      } else {
+          let e = input[index];
+          if ((leftExtra > 0 && e === "(") || (rightExtra > 0 && e === ")")) {
+              recursiveSearch(input, index + 1, leftCount, rightCount, leftExtra - (e === "(" ? 1 : 0), rightExtra - (e === ")" ? 1 : 0), current);
+          }
+          current += e;
+          if (e != "(" && e != ")") recursiveSearch(input, ++index, leftCount, rightCount, leftExtra, rightExtra, current);
+          else if (e === "(") recursiveSearch(input, ++index, ++leftCount, rightCount, leftExtra, rightExtra, current);
+          else if (e === ")" && rightCount < leftCount) recursiveSearch(input, ++index, leftCount, ++rightCount, leftExtra, rightExtra, current);
+      }
+  }
+  
+  recursiveSearch(s, 0, 0, 0, left, right, "");
+  return output;
+};
