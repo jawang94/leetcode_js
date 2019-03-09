@@ -11,68 +11,16 @@
  * @param {number[]} nums
  * @return {number}
  */
+// Solution 1, 72ms faster than ~93.45% & memory 36.8mb less than 89.3%
 var removeDuplicates = function(nums) {
-  if (!nums || nums.length === 0) {
-    return 0;
-  }
+  if (nums.length === 0) return nums;
 
-  var end = 0;
-
-  // index: 012345678
-  // vals:  111222333
-  // first swap happen when end = 0; i points at index 3 with val 2
-  // end++ becomes end points at index 1 and swap with index 3
-  // after that vals become:
-  // vals:  121122333
-  // i at at index 4 and end is at index 2
-
-  for (var i = 1; i < nums.length; i++) {
-    if (nums[i] !== nums[end]) {
-      end++;
-
-      if (i !== end) {
-        nums[end] = nums[i];
-      }
+  for (var i = 1, j = 0; i < nums.length; i++) {
+    if (nums[i] != nums[j]) {
+      j++;
+      nums[j] = nums[i];
     }
   }
 
-  return end + 1;
-};
-
-// second attempt
-
-var removeDuplicates = function(nums) {
-  var sorted = 0;
-
-  for (var i = 1; i < nums.length; i++) {
-    if (nums[i] !== nums[sorted]) {
-      sorted++;
-      nums[sorted] = nums[i];
-    }
-  }
-
-  return sorted + 1;
-};
-
-// [tricky]
-
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var removeDuplicates = function(nums) {
-  var hash = {};
-  var cur = 0;
-
-  for (var i = 0; i < nums.length; i++) {
-    var num = nums[i];
-
-    if (hash[num] === undefined) {
-      hash[num] = true;
-      nums[cur] = num;
-      cur++;
-    }
-  }
-
-  return cur;
+  return j + 1;
 };
