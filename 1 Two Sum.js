@@ -41,13 +41,16 @@ var twoSum = function(nums, target) {
   return false;
 };
 
-// Map possibly faster? Nope
-// var twoSum = function(nums, target) {
-//     let myMap = new Map();
-//     for (var i = 0; i < nums.length; i++) {
-//         let addend = target - nums[i];
-//         if (myMap.has(addend)) return [myMap.get(addend), i];
-//         myMap.set(nums[i], i);
-//     }
-//     return false;
-// }
+// Even more optimized solution w/ maps. 60ms faster than ~91.29% and 35.1mb less than ~34.42%
+var twoSum = function(nums, target) {
+  let myMap = new Map();
+
+  for (let i = 0; i < nums.length; i++) {
+    let current = nums[i];
+    let newTarget = target - current;
+    if (myMap.has(current)) return [myMap.get(current), i];
+    else myMap.set(newTarget, i);
+  }
+
+  return false;
+};
