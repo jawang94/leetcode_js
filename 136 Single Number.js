@@ -17,9 +17,9 @@
  */
 
 var singleNumber = nums => {
-  let bitNum = 0;
+  let xOr = 0;
   nums.forEach(e => {
-    bitNum ^= e;
+    xOr ^= e;
   });
-  return bitNum;
+  return xOr;
 };

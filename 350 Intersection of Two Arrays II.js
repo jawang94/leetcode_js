@@ -18,6 +18,7 @@
  * @param {number[]} nums2
  * @return {number[]}
  */
+// Inferior to iterator solution
 var intersect = function(nums1, nums2) {
   var hash = {};
   var arr1, arr2;
@@ -44,6 +45,38 @@ var intersect = function(nums1, nums2) {
       count--;
       result.push(arr2[i]);
     }
+  }
+
+  return result;
+};
+
+// With iterator object, 60ms faster than ~91.02% and space 35mb less than ~62.28%
+var intersect = function(nums1, nums2) {
+  let result = [];
+  let map1 = new Map();
+  let map2 = new Map();
+
+  nums1.forEach(e => {
+    if (!map1.has(e)) map1.set(e, 1);
+    else if (map1.has(e)) map1.set(e, map1.get(e) + 1);
+  });
+  nums2.forEach(e => {
+    if (!map2.has(e)) map2.set(e, 1);
+    else if (map2.has(e)) map2.set(e, map2.get(e) + 1);
+  });
+
+  let iterator1 = map1.keys();
+  let iterate = iterator1.next();
+
+  while (!iterate.done) {
+    if (map2.has(iterate.value)) {
+      let count = Math.min(map1.get(iterate.value), map2.get(iterate.value));
+      while (count > 0) {
+        result.push(iterate.value);
+        count = count - 1;
+      }
+    }
+    iterate = iterator1.next();
   }
 
   return result;
