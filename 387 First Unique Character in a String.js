@@ -13,7 +13,7 @@
  * @return {number}
  */
 
-// First solution...128ms faster than ~28.25% & memory 39.3mb less than ~16.59%. Please refactor!
+// First solution...100ms faster than ~77.45% & memory 38.5mb less than ~43.78%. Not too shabby.
 var firstUniqChar = function(s) {
   const len = s.length;
   let reference = new Map();
@@ -31,11 +31,9 @@ var firstUniqChar = function(s) {
 
   while (!iterator.done) {
     let letter = iterator.value;
-    console.log(letter, reference.get(letter));
 
     if (reference.get(letter) === 1) {
       let pos = s.indexOf(letter);
-
       if (pos > -1 && pos < result) result = pos;
     }
     iterator = keys.next();

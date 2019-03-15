@@ -49,3 +49,31 @@ var myAtoi = function(str) {
 
   return num;
 };
+
+// 88ms faster than ~71.86% and space 37.2mb less than ~10.34%. Need to improve space compelxity.
+var myAtoi = function(str) {
+  const len = str.length;
+  let max = 2147483647;
+  let min = -2147483648;
+  let numberMatch = /^[\d ()+-]+$/;
+
+  for (let i = 0, j = i; i < len; i++) {
+    let current = str[i];
+
+    if (current != " " && !current.match(numberMatch)) return 0;
+    else if (current != " " && current.match(numberMatch)) {
+      let result = "";
+
+      while (j < len && current.match(numberMatch)) {
+        result += str[j];
+        j++;
+      }
+      let output = parseInt(result);
+      if (isNaN(output)) return 0;
+      else if (output > max) return max;
+      else if (output < min) return min;
+      else return output;
+    }
+  }
+  return 0;
+};
