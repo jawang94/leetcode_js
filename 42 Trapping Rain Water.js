@@ -11,19 +11,20 @@
  * @param {number[]} height
  * @return {number}
  */
-var trap = function(height) {
+const trap = height => {
   const n = height.length;
-  var rain = 0;
-  var LtoR = new Array(n).fill(0);
-  var RtoL = new Array(n).fill(0);
-  var tempL = height[0];
-  var tempR = height[n - 1];
+  let rain = 0;
+  let LtoR = new Array(n).fill(0);
+  let RtoL = new Array(n).fill(0);
+  let tempL = height[0];
+  let tempR = height[n - 1];
 
   for (let i = 0; i < n; i++) {
     if (height[i] > tempL) {
       tempL = height[i];
       LtoR[i] = tempL;
     } else LtoR[i] = tempL;
+
     if (height[n - i - 1] > tempR) {
       tempR = height[n - i - 1];
       RtoL[n - i - 1] = tempR;
@@ -31,11 +32,9 @@ var trap = function(height) {
   }
 
   for (let j = 0; j < n; j++) {
-    if (LtoR[j] < RtoL[j]) {
-      rain += LtoR[j] - height[j];
-    } else {
-      rain += RtoL[j] - height[j];
-    }
+    if (LtoR[j] < RtoL[j]) rain += LtoR[j] - height[j];
+    else rain += RtoL[j] - height[j];
   }
+
   return rain;
 };
