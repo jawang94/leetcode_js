@@ -15,26 +15,39 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-var reverseList = function(head) {
-  if (!head) return head;
-  let curr = head;
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+// 60ms faster than ~93.19% & 35.1mb less than ~35.63%
+const reverseList = head => {
+  if (head === [] || head === null) return head;
+
+  let current = head;
   let prev = null;
 
-  while (curr.next != null) {
-    let next = curr.next;
-    curr.next = prev;
-    prev = curr;
-    curr = next;
+  while (current != null) {
+    let next = current.next;
+    current.next = prev;
+    prev = current;
+    current = next;
   }
-  curr.next = prev;
-  return curr;
+
+  return prev;
 };
 
-// Recursive solution faster than ~94.85%
-var reverseList = head => {
-  if (head === null || head.next === null) return head;
-  let p = reverseList(head.next);
-  head.next.next = head;
-  head.next = null;
-  return p;
-};
+// Recursive approach slightly less efficient @ 64ms && 36mb
+// const reverseList = head => {
+//     if (head === [] || head === null || head.next === null) return head;
+//     let next = reverseList(head.next)
+//     head.next.next = head;
+//     head.next = null;
+//     return next;
+// }
