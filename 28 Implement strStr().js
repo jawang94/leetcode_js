@@ -21,19 +21,21 @@
  * @param {string} needle
  * @return {number}
  */
-// Super brute force, worst solution ever. ~9720ms faster than ~5.02% space 65.7mb less than ~5.31%
+// Super brute force, worst solution ever. ~8896 faster than ~5.02% space 65.7mb less than ~5.31%
 var strStr = function(haystack, needle) {
   if (needle.length < 1) return 0;
 
-  for (let i = 0, j = i; i < haystack.length; i++) {
-    let window = "";
-    j = i;
+  for (let i = 0, j; i < haystack.length; i++) {
+    if (haystack[i] === needle[0]) {
+      let window = "";
+      j = i;
 
-    while (j - i < needle.length) {
-      window += haystack[j];
-      j += 1;
+      while (j - i < needle.length) {
+        window += haystack[j];
+        j += 1;
+      }
+      if (window === needle) return i;
     }
-    if (window === needle) return i;
   }
 
   return -1;
