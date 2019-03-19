@@ -62,3 +62,21 @@ var isPalindrome = function(head) {
 
   return true;
 };
+
+// 68ms faster than ~92.18% but 40.2mb space less than ~31.34%. Please refactor for O(1) space.
+var isPalindrome = function(head) {
+  let arr = [];
+
+  while (head != null) {
+    arr.push(head.val);
+    head = head.next;
+  }
+
+  const len = arr.length;
+
+  for (let i = 0; i < Math.floor(len / 2); i++) {
+    if (arr[i] === arr[len - 1 - i]) continue;
+    return false;
+  }
+  return true;
+};

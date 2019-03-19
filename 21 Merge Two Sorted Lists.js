@@ -75,3 +75,33 @@ var mergeTwoLists = function(l1, l2) {
 
   return head;
 };
+
+// First solution 68ms faster than ~88.16% and space 35.5mb less than ~61.56%
+var mergeTwoLists = function(l1, l2) {
+  if (l1 === null) return l2;
+  else if (l2 === null) return l1;
+
+  let head = l1.val <= l2.val ? l1 : l2;
+  let r1 = l1;
+  let r2 = l2;
+
+  while (r1 != null && r2 != null) {
+    if (r1.val <= r2.val) {
+      while (r1.next != null && r1.next.val <= r2.val) {
+        r1 = r1.next;
+      }
+      let marker = r1;
+      r1 = r1.next;
+      marker.next = r2;
+    } else if (r2.val <= r1.val) {
+      while (r2.next != null && r2.next.val < r1.val) {
+        r2 = r2.next;
+      }
+      let marker = r2;
+      r2 = r2.next;
+      marker.next = r1;
+    }
+  }
+
+  return head;
+};
