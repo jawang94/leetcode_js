@@ -22,11 +22,10 @@
  * @param {TreeNode} root
  * @return {number}
  */
-
-var maxDepth = root => {
-  if (root === null) {
-    return 0;
-  } else {
+// 68ms faster than ~71.35% and 36.9mb less than ~49.53%
+var maxDepth = function(root) {
+  if (root === null) return 0;
+  else {
     let leftDepth = maxDepth(root.left);
     let rightDepth = maxDepth(root.right);
     return Math.max(leftDepth, rightDepth) + 1;
