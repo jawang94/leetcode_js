@@ -9,41 +9,60 @@
  * @param {TreeNode} root
  * @return {number[][]}
  */
+
+// 60ms faster than ~91.03% however 35MB less than ~20.71%. Inefficient memory usage.
 var levelOrder = function(root) {
-  var result = [];
+  if (root === null) return [];
 
-  if (root === null) {
-    return result;
-  }
-
-  var queue = [];
-  var temp = [];
-  var curLvlCnt = 1;
-  var nextLvlCnt = 0;
+  let result = [];
+  let queue = [];
+  let temp = [];
+  let currentLevelCount = 1;
+  let nextLevelCount = 0;
 
   queue.push(root);
 
-  while (queue.length !== 0) {
-    var p = queue.shift();
-    temp.push(p.val);
-    curLvlCnt--;
+  while (queue.length) {
+    let node = queue.shift();
+    temp.push(node.val);
+    currentLevelCount--;
 
-    if (p.left) {
-      queue.push(p.left);
-      nextLvlCnt++;
-    }
-    if (p.right) {
-      queue.push(p.right);
-      nextLvlCnt++;
+    if (node.left) {
+      queue.push(node.left);
+      nextLevelCount++;
     }
 
-    if (curLvlCnt === 0) {
+    if (node.right) {
+      queue.push(node.right);
+      nextLevelCount++;
+    }
+
+    if (currentLevelCount === 0) {
       result.push(temp);
-      curLvlCnt = nextLvlCnt;
-      nextLvlCnt = 0;
+      currentLevelCount = nextLevelCount;
+      nextLevelCount = 0;
       temp = [];
     }
   }
 
+  return result;
+};
+
+// Recursive approach...runs in similar time and space complexity. Hmm.
+var levelOrder = function(root) {
+  let result = [];
+
+  if (root === null) return result;
+
+  const traverseLevels = (node, level) => {
+    if (result.length === level) result.push([]);
+
+    result[level].push(node.val);
+
+    if (node.left) traverseLevels(node.left, level + 1);
+    if (node.right) traverseLevels(node.right, level + 1);
+  };
+
+  traverseLevels(root, 0);
   return result;
 };
