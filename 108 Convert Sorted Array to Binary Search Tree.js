@@ -26,3 +26,19 @@ var generate = function(nums, start, end) {
 
   return node;
 };
+
+// 72ms faster than ~90.95% & 37.7MB less than ~41.25%
+var sortedArrayToBST = function(nums) {
+  if (nums.length === 1) return new TreeNode(nums[0]);
+  if (nums.length === 0) return null;
+
+  let mid = Math.floor(nums.length / 2);
+  let root = new TreeNode(nums[mid]);
+  let left = nums.slice(0, mid);
+  let right = nums.slice(mid + 1);
+
+  root.left = sortedArrayToBST(left);
+  root.right = sortedArrayToBST(right);
+
+  return root;
+};
