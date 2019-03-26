@@ -31,18 +31,16 @@
  * @return {boolean}
  */
 var isSymmetric = function(root) {
-  var queue = [];
+  let queue = [];
   queue.push(root);
 
-  while (queue.length !== 0) {
-    var len = queue.length;
+  while (queue.length != 0) {
+    let len = queue.length;
 
-    if (!isLevelSymmetric(queue)) {
-      return false;
-    }
+    if (!checkSymmetry(queue)) return false;
 
-    for (var i = 0; i < len; i++) {
-      var node = queue.shift();
+    for (let i = 0; i < len; i++) {
+      let node = queue.shift();
 
       if (node !== null) {
         queue.push(node.left);
@@ -54,22 +52,21 @@ var isSymmetric = function(root) {
   return true;
 };
 
-function isLevelSymmetric(nodes) {
-  var len = nodes.length;
-  var beg = 0;
-  var end = len - 1;
+const checkSymmetry = nodes => {
+  let left = 0;
+  let right = nodes.length - 1;
 
-  while (beg < end) {
+  while (left < right) {
     if (
-      (nodes[beg] === null && nodes[end] === null) ||
-      (nodes[beg] && nodes[end] && nodes[beg].val === nodes[end].val)
+      (nodes[left] === null && nodes[right] === null) ||
+      (nodes[left] && nodes[right] && nodes[left].val === nodes[right].val)
     ) {
-      beg++;
-      end--;
+      left++;
+      right--;
     } else {
       return false;
     }
   }
 
   return true;
-}
+};
