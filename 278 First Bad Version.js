@@ -50,6 +50,7 @@ var solution = function(isBadVersion) {
   };
 };
 
+// 56ms faster than ~89.47% and 33.8MB less than ~48.78%
 /**
  * Definition for isBadVersion()
  *
@@ -70,19 +71,16 @@ var solution = function(isBadVersion) {
    * @return {integer} The first bad version
    */
   return function(n) {
-    var left = 1;
-    var right = n;
+    let low = 1;
+    let high = n;
 
-    while (left < right) {
-      var mid = left + Math.floor((right - left) / 2);
+    while (low < high) {
+      let mid = low + Math.floor((high - low) / 2);
 
-      if (isBadVersion(mid)) {
-        right = mid;
-      } else {
-        left = mid + 1;
-      }
+      if (isBadVersion(mid)) high = mid;
+      else low = mid + 1;
     }
 
-    return left;
+    return low;
   };
 };
