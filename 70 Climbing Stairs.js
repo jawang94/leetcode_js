@@ -19,3 +19,19 @@ var climbStairs = function(n) {
 
   return n2;
 };
+
+// 56ms faster than ~95.04% and 33.7MB less than 46.96%
+var climbStairs = function(n) {
+  if (n <= 2) return n;
+
+  let first = 1;
+  let second = 2;
+
+  for (let i = 3; i <= n; i++) {
+    let next = first + second;
+    first = second;
+    second = next;
+  }
+
+  return second;
+};
