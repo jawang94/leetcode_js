@@ -2,17 +2,18 @@
  * @param {number[]} nums
  * @return {number}
  */
+// 64ms faster than ~95.04% and space 35.7mb less than ~20%
 var maxSubArray = function(nums) {
-  var sum = 0;
-  var maxSum = -Infinity;
+  const len = nums.length;
+  let maxSum = -Infinity;
+  let currentSum = 0;
 
-  for (var i = 0; i < nums.length; i++) {
-    sum += nums[i];
-    maxSum = Math.max(maxSum, sum);
+  if (len < 2) return nums;
 
-    if (sum < 0) {
-      sum = 0;
-    }
+  for (let i = 0; i < len; i++) {
+    currentSum += nums[i];
+    maxSum = Math.max(maxSum, currentSum);
+    if (currentSum < 0) currentSum = 0;
   }
 
   return maxSum;
