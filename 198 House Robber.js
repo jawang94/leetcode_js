@@ -32,18 +32,19 @@ var rob = function(nums) {
   return Math.max(even, odd);
 };
 
-// var rob = function(nums) {
-//     var dp = [];
+// 56ms faster than ~95.41% & 33.8MB less than ~25.89%. Could refactor to use less space.
+var rob = function(nums) {
+  const n = nums.length;
+  if (n === 0) return 0;
 
-//     if(!nums || nums.length === 0) {
-//         return 0;
-//     }
-//     // dp[i] is the max amount can rob on ith house
+  let prev1 = 0;
+  let prev2 = 0;
 
-//     for(var i = 0; i < nums.length; i++){
-//         var num = nums[i];
-//         dp[i] = Math.max((dp[i-2] || 0) + num, (dp[i-1] || 0));
-//     }
+  for (let i = 0; i < n; i++) {
+    let temp = prev1;
+    prev1 = Math.max(prev2 + nums[i], prev1);
+    prev2 = temp;
+  }
 
-//     return dp[nums.length - 1];
-// };
+  return prev1;
+};
