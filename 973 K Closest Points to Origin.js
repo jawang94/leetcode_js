@@ -30,7 +30,7 @@
  * @param {number} K
  * @return {number[][]}
  */
-// Brute force method 348ms faster than ~15.77% and 68MB less than ~13.25%
+// Brute force method 348ms faster than ~15.77% and 68MB less than ~13.25%. Need to improve.
 var kClosest = function(points, K) {
   const len = points.length;
 
