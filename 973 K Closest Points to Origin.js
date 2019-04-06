@@ -30,7 +30,7 @@
  * @param {number} K
  * @return {number[][]}
  */
-// Brute force method 348ms faster than ~15.77% and 68MB less than ~13.25%. Need to improve.
+// Brute force O(Nlog(N)) method 348ms faster than ~15.77% and 68MB less than ~13.25%.
 var kClosest = function(points, K) {
   const len = points.length;
 
@@ -75,4 +75,33 @@ const merge = (left, right) => {
   }
 
   return result.concat(left.length ? left : right);
+};
+
+// Limited Selection Sort method O(N). 172ms faster than ~98.99% and 48MB less than ~77.11%
+var kClosest = function(points, K) {
+  if (points.length === K) return points;
+  return quickSelect(points, K, 0, points.length - 1);
+};
+
+const quickSelect = (points, K, start, end) => {
+  let pivot = points[end];
+  let border = start;
+
+  for (let i = start; i <= end; i++) {
+    if (distance(points[i]) <= distance(pivot)) {
+      let temp = points[i];
+      points[i] = points[border];
+      points[border] = temp;
+      border += 1;
+    }
+  }
+
+  if (border == K) return points.slice(0, K);
+  else if (border < K) return quickSelect(points, K, border, end);
+
+  return quickSelect(points, K, start, border - 2);
+};
+
+const distance = point => {
+  return point[0] ** 2 + point[1] ** 2;
 };
