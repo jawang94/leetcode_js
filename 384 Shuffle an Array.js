@@ -55,3 +55,44 @@ Solution.prototype.shuffle = function() {
  * var param_1 = obj.reset()
  * var param_2 = obj.shuffle()
  */
+
+// Not sure why code below is giving error on large alternating test case.
+/**
+ * @param {number[]} nums
+ */
+var Solution = function(nums) {
+  this.shuffled = nums;
+  this.original = [...nums];
+};
+
+/**
+ * Resets the array to its original configuration and return it.
+ * @return {number[]}
+ */
+Solution.prototype.reset = function() {
+  this.shuffled = this.original;
+  this.original = [...this.original];
+  return this.original;
+};
+
+/**
+ * Returns a random shuffling of the array.
+ * @return {number[]}
+ */
+Solution.prototype.shuffle = function() {
+  let sLen = this.original.length;
+
+  for (let i = 0; i < sLen; i++) {
+    let j = Math.floor(Math.random() * sLen);
+    [this.shuffled[i], this.shuffled[j]] = [this.shuffled[j], this.shuffled[i]];
+  }
+
+  return this.shuffled;
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * var obj = new Solution(nums)
+ * var param_1 = obj.reset()
+ * var param_2 = obj.shuffle()
+ */
