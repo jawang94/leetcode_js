@@ -46,13 +46,10 @@ MinStack.prototype.getMin = function() {
   return this.min[this.min.length - 1];
 };
 
-// Solution 2. 132ms.
-/**
- * initialize your data structure here.
- */
+// 112ms faster than ~80.85% and 44.2MB less than ~74.44%
 var MinStack = function() {
+  this.min = Infinity;
   this.stack = [];
-  this.min;
 };
 
 /**
@@ -60,20 +57,20 @@ var MinStack = function() {
  * @return {void}
  */
 MinStack.prototype.push = function(x) {
+  if (x < this.min) this.min = x;
   this.stack.push(x);
-  if (this.min === undefined || x < this.min) this.min = x;
 };
 
 /**
  * @return {void}
  */
 MinStack.prototype.pop = function() {
+  let newMin = Infinity;
   this.stack.pop();
-  let temp = this.stack[0];
-  for (var i = 0; i < this.stack.length; i++) {
-    if (this.stack[i] < temp) temp = this.stack[i];
-  }
-  this.min = temp;
+  this.stack.forEach(e => {
+    if (e < newMin) newMin = e;
+  });
+  this.min = newMin;
 };
 
 /**
@@ -92,7 +89,7 @@ MinStack.prototype.getMin = function() {
 
 /**
  * Your MinStack object will be instantiated and called as such:
- * var obj = Object.create(MinStack).createNew()
+ * var obj = new MinStack()
  * obj.push(x)
  * obj.pop()
  * var param_3 = obj.top()
