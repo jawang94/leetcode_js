@@ -27,19 +27,16 @@
  * @param {number} n
  * @return {string[]}
  */
-
+// 68ms faster than ~90.54% and 37.5MB less than ~10.94%
 var fizzBuzz = function(n) {
   let output = [];
-  for (var i = 1; i <= n; i++) {
-    if (i % 15 === 0) {
-      output.push("FizzBuzz");
-    } else if (i % 5 === 0) {
-      output.push("Buzz");
-    } else if (i % 3 === 0) {
-      output.push("Fizz");
-    } else {
-      output.push(i.toString());
-    }
+
+  for (let i = 1; i <= n; i++) {
+    if (i % 15 === 0) output.push("FizzBuzz");
+    else if (i % 5 === 0) output.push("Buzz");
+    else if (i % 3 === 0) output.push("Fizz");
+    else output.push("" + i);
   }
+
   return output;
 };

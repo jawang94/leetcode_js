@@ -36,3 +36,22 @@ var countPrimes = function(n) {
 
   return count;
 };
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+// Brute force 168ms faster than ~66.96% and 130.2MB less than ~9.09%...too much memory usage.
+var countPrimes = function(n) {
+  let seen = [];
+  let count = 0;
+
+  for (let i = 2; i < n; i++) {
+    if (seen[i] === undefined) {
+      count += 1;
+      for (let j = 1; j * i < n; j++) seen[i * j] = 1;
+    }
+  }
+
+  return count;
+};
