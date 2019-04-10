@@ -6,32 +6,30 @@
  * @param {number} n
  * @return {number}
  */
+// Ever so slightly better...156ms faster than ~76.20% and 128.5MB less than ~13.63%
 var countPrimes = function(n) {
-  if (n <= 2) {
-    return 0;
-  }
+  if (n <= 2) return 0;
 
-  var mem = [];
+  let memo = [];
 
   for (var i = 2; i < n; i++) {
-    mem[i] = true;
+    memo[i] = true;
   }
 
-  sq = parseInt(Math.sqrt(n - 1));
+  let sqRt = Math.sqrt(n - 1);
 
-  for (i = 2; i <= sq; i++) {
-    if (mem[i]) {
-      for (var j = i + i; j < mem.length; j += i) {
-        mem[j] = false;
+  for (i = 2; i <= sqRt; i++) {
+    if (memo[i]) {
+      for (var j = 2 * i; j < memo.length; j += i) {
+        memo[j] = false;
       }
     }
   }
 
-  var count = 0;
-  for (i = 2; i < mem.length; i++) {
-    if (mem[i]) {
-      count++;
-    }
+  let count = 0;
+
+  for (i = 2; i < memo.length; i++) {
+    if (memo[i]) count += 1;
   }
 
   return count;
@@ -41,7 +39,7 @@ var countPrimes = function(n) {
  * @param {number} n
  * @return {number}
  */
-// Brute force 168ms faster than ~66.96% and 130.2MB less than ~9.09%...too much memory usage.
+// Brute force 164ms faster than ~71.03% and 130.1MB less than ~10.60%...too much memory usage.
 var countPrimes = function(n) {
   let seen = [];
   let count = 0;
