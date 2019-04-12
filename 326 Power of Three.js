@@ -21,7 +21,7 @@
  * @param {number} n
  * @return {boolean}
  */
-// 300ms faster than ~99.31% and 48.2MB less than ~30.30%. Could be better memory-wise.
+// 300ms faster than ~99.31% and 48MB less than ~43.94%. Could be better memory-wise.
 var isPowerOfThree = function(n) {
   if (n === 0) return false;
   let clone = n;
