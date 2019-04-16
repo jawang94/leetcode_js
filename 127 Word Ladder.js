@@ -25,79 +25,44 @@
  *   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
  * @return {number}
  */
+/**
+ * @param {string} beginWord
+ * @param {string} endWord
+ * @param {string[]} wordList
+ * @return {number}
+ */
+// About 520ms faster than ~50% and 42.7MB less than ~70%
 var ladderLength = function(beginWord, endWord, wordList) {
-  var visited = new Set();
-  var queue = [];
-  var level = 1;
-  var letters = "abcdefghijklmnopqrstuvwxyz";
-  queue.push(beginWord);
-  visited.add(beginWord);
-
-  while (queue.length > 0) {
-    var len = queue.length;
-
-    for (var i = 0; i < len; i++) {
-      var word = queue.shift();
-
-      for (var j = 0; j < word.length; j++) {
-        for (var k = 0; k < letters.length; k++) {
-          var newWord =
-            word.substring(0, j) + letters[k] + word.substring(j + 1);
-
-          if (newWord === endWord) {
-            return level + 1;
-          }
-          if (wordList.has(newWord) && !visited.has(newWord)) {
-            queue.push(newWord);
-            visited.add(newWord);
-          }
-        }
-      }
-    }
-
-    level++;
-  }
-
-  return 0;
-};
-
-// will time exceeded. javascript hash is slower than set
-var ladderLength = function(beginWord, endWord, wordList) {
-  if (beginWord === endWord) {
-    return 0;
-  }
-
-  var queue = [];
-  var visited = {};
-  var count = 1;
-  var baseCharCode = "a".charCodeAt(0);
+  let result = 1;
+  const visited = new Set([beginWord]);
+  let queue = [];
+  const words = new Set(wordList);
 
   queue.push(beginWord);
-
   while (queue.length) {
-    var len = queue.length;
+    const nextQueue = [];
 
-    for (var i = 0; i < len; i++) {
-      var word = queue.shift();
+    for (let cur of queue) {
+      if (cur === endWord) {
+        return result;
+      }
 
-      for (var j = 0; j < word.length; j++) {
-        for (var k = 0; k < 26; k++) {
-          var newChar = String.fromCharCode(baseCharCode + k);
-          var newWord = word.substring(0, j) + newChar + word.substring(j + 1);
-
-          if (newWord === endWord) {
-            return count + 1;
+      const curArr = cur.split("");
+      for (let i = 0; i < curArr.length; i++) {
+        for (let j = 0; j < 26; j++) {
+          curArr[i] = String.fromCharCode(96 + j);
+          const newStr = curArr.join("");
+          if (!visited.has(newStr) && words.has(newStr)) {
+            nextQueue.push(newStr);
+            visited.add(newStr);
           }
-
-          if (!visited[newWord] && wordList.has(newWord)) {
-            visited[newWord] = true;
-            queue.push(newWord);
-          }
+          curArr[i] = cur[i];
         }
       }
     }
 
-    count++;
+    queue = nextQueue;
+    result += 1;
   }
 
   return 0;
