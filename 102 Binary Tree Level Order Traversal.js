@@ -1,3 +1,21 @@
+// Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+
+// For example:
+// Given binary tree [3,9,20,null,null,15,7],
+
+//     3
+//    / \
+//   9  20
+//     /  \
+//    15   7
+// return its level order traversal as:
+
+// [
+//   [3],
+//   [9,20],
+//   [15,7]
+// ]
+
 /**
  * Definition for a binary tree node.
  * function TreeNode(val) {
@@ -48,21 +66,20 @@ var levelOrder = function(root) {
   return result;
 };
 
-// Recursive approach...runs in similar time and space complexity. Hmm.
+// Recursive approach 60ms faster than 100% and 34.9MB less than ~38.46%
 var levelOrder = function(root) {
   let result = [];
 
-  if (root === null) return result;
-
-  const traverseLevels = (node, level) => {
-    if (result.length === level) result.push([]);
+  const traverse = (node, level) => {
+    if (node === null) return node;
+    if (!result[level]) result[level] = [];
 
     result[level].push(node.val);
 
-    if (node.left) traverseLevels(node.left, level + 1);
-    if (node.right) traverseLevels(node.right, level + 1);
+    if (node.left) traverse(node.left, level + 1);
+    if (node.right) traverse(node.right, level + 1);
   };
 
-  traverseLevels(root, 0);
+  traverse(root, 0);
   return result;
 };
