@@ -30,6 +30,7 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
+// Iterative solution 68 - 72ms and 36MB. Not the best.
 var isSymmetric = function(root) {
   let queue = [];
   queue.push(root);
@@ -69,4 +70,19 @@ const checkSymmetry = nodes => {
   }
 
   return true;
+};
+
+// Recursive solution 64ms faster than 100% and 35.6MB less than ~30%.
+var isSymmetric = function(root) {
+  return recursiveSymmetry(root, root);
+};
+
+const recursiveSymmetry = (root1, root2) => {
+  if (root1 === null && root2 === null) return true;
+  if (root1 === null || root2 === null) return false;
+  return (
+    root1.val === root2.val &&
+    recursiveSymmetry(root1.left, root2.right) &&
+    recursiveSymmetry(root1.right, root2.left)
+  );
 };
