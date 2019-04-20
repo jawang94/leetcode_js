@@ -9,57 +9,33 @@
  * @param {TreeNode} root
  * @return {number[]}
  */
-
-// var preorderTraversal = function(root) {
-//     var result = [];
-
-//     traverse(root, result);
-
-//     return result;
-// };
-
-// function traverse(node, result) {
-//     if(!node) {
-//         return;
-//     }
-
-//     result.push(node.val);
-
-//     traverse(node.left, result);
-//     traverse(node.right, result);
-// }
-
-/**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
-/**
- * @param {TreeNode} root
- * @return {number[]}
- */
+// Recursive approach 60ms faster than ~54.97% and 33.9MB less than ~14.96%
 var preorderTraversal = function(root) {
-  var result = [];
+  let result = [];
 
-  if (root === null) {
-    return result;
-  }
+  const traverse = node => {
+    if (node === null) return node;
+    result.push(node.val);
+    if (node.left != null) traverse(node.left);
+    if (node.right != null) traverse(node.right);
+  };
 
-  var stack = [];
+  traverse(root);
+  return result;
+};
+
+// Iterative approach 56ms faster than 100% and 33.9MB less than ~14.96%
+var preorderTraversal = function(root) {
+  let result = [];
+  let stack = [];
   stack.push(root);
 
-  while (stack.length) {
-    var node = stack.pop();
+  while (stack.length > 0) {
+    let node = stack.pop();
+    if (node === null) continue;
     result.push(node.val);
-
-    if (node.right !== null) {
-      stack.push(node.right);
-    }
-    if (node.left !== null) {
-      stack.push(node.left);
-    }
+    if (node.right) stack.push(node.right);
+    if (node.left) stack.push(node.left);
   }
 
   return result;
