@@ -11,25 +11,11 @@
  * @param {TreeNode} q
  * @return {TreeNode}
  */
+// Recursive approach 84ms faster than ~100% and 43.6MB less than ~74%
 var lowestCommonAncestor = function(root, p, q) {
-  if (root === null) {
-    return root;
-  }
-
-  if (root === p || root === q) {
-    return root;
-  }
-
-  if (
-    (root.val >= p.val && root.val <= q.val) ||
-    (root.val <= p.val && root.val >= q.val)
-  ) {
-    return root;
-  }
-
-  if (root.val > p.val && root.val > q.val) {
+  if (p.val < root.val && q.val < root.val)
     return lowestCommonAncestor(root.left, p, q);
-  } else {
+  else if (p.val > root.val && q.val > root.val)
     return lowestCommonAncestor(root.right, p, q);
-  }
+  else return root;
 };
