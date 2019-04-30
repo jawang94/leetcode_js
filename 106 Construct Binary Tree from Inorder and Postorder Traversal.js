@@ -11,13 +11,8 @@
  * @return {TreeNode}
  */
 var buildTree = function(inorder, postorder) {
-  if (inorder === null || postorder === null) {
-    return null;
-  }
-
-  if (inorder.length !== postorder.length) {
-    return null;
-  }
+  if (inorder === null || postorder === null) return null;
+  if (inorder.length !== postorder.length) return null;
 
   return generate(
     inorder,
@@ -29,46 +24,48 @@ var buildTree = function(inorder, postorder) {
   );
 };
 
-var generate = function(inorder, il, ir, postorder, pl, pr) {
-  if (il > ir || pl > pr) {
-    return null;
-  }
+var generate = function(
+  inorder,
+  inLeft,
+  inRight,
+  postorder,
+  postLeft,
+  postRight
+) {
+  if (inLeft > inRight || postLeft > postRight) return null;
 
-  var rootVal = postorder[pr];
+  var rootVal = postorder[postRight];
   var root = new TreeNode(rootVal);
-  var rootIndex = -1;
+  var rootIndex = search(inorder, inLeft, inRight, rootVal);
 
-  for (var i = il; i <= ir; i++) {
-    var nodeVal = inorder[i];
-    if (nodeVal === rootVal) {
-      rootIndex = i;
-      break;
-    }
-  }
+  if (rootIndex < 0) return null;
 
-  if (rootIndex === -1) {
-    return null;
-  }
-
-  var leftTreeSize = rootIndex - il;
-  var rightTreeSize = ir - rootIndex;
+  var leftTreeSize = rootIndex - inLeft;
+  var rightTreeSize = inRight - rootIndex;
 
   root.left = generate(
     inorder,
-    il,
+    inLeft,
     rootIndex - 1,
     postorder,
-    pl,
-    pl + leftTreeSize - 1
+    postLeft,
+    postLeft + leftTreeSize - 1
   );
   root.right = generate(
     inorder,
     rootIndex + 1,
-    ir,
+    inRight,
     postorder,
-    pr - rightTreeSize,
-    pr - 1
+    postRight - rightTreeSize,
+    postRight - 1
   );
 
   return root;
+};
+
+const search = (inOrder, left, right, value) => {
+  for (var i = left; i <= right; i++) {
+    if (inOrder[i] === value) return i;
+  }
+  return -1;
 };
