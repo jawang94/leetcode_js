@@ -10,6 +10,7 @@
  * @param {number[]} postorder
  * @return {TreeNode}
  */
+// 76ms faster than ~96.04% and 36MB less than 100%
 var buildTree = function(inorder, postorder) {
   if (inorder === null || postorder === null) return null;
   if (inorder.length !== postorder.length) return null;
