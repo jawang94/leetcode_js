@@ -34,35 +34,36 @@
 // Hide Similar Problems
 
 // reference: http://www.cnblogs.com/anne-vista/p/4815076.html
+
+// Solution 1 56ms faster than 100% and 41.6MB less than 51.11%
 var lowestCommonAncestor = function(root, p, q) {
-  if (root === null || root === p || root === q) {
-    return root;
-  }
+  if (!root || root === p || root === q) return root;
 
-  var l = lowestCommonAncestor(root.left, p, q);
-  var r = lowestCommonAncestor(root.right, p, q);
+  let left = lowestCommonAncestor(root.left, p, q),
+    right = lowestCommonAncestor(root.right, p, q);
 
-  if (l !== null && r !== null) {
-    // p and q are on two different side of root node.
-    return root;
-  }
+  if (!left) return right;
+  else if (!right) return left;
 
-  return l !== null ? l : r; // either one of p, q is on one side OR p, q is not in l&r subtrees
+  return root;
 };
 
-// second attempt
-
+// Solution 2 64ms faster than ~99.44% and 41.5MB less than ~76.67%. Solution 1 slightly better on average.
 var lowestCommonAncestor = function(root, p, q) {
-  if (root === null || root === p || root === q) {
-    return root;
-  }
+  let lca = null;
 
-  var left = lowestCommonAncestor(root.left, p, q);
-  var right = lowestCommonAncestor(root.right, p, q);
+  let traverse = node => {
+    if (node === null) return false;
 
-  if (left !== null && right !== null) {
-    return root;
-  }
+    let left = traverse(node.left) ? 1 : 0,
+      right = traverse(node.right) ? 1 : 0,
+      mid = node === p || node === q ? 1 : 0;
 
-  return left || right;
+    if (left + right + mid >= 2) lca = node;
+
+    return left + right + mid > 0;
+  };
+
+  traverse(root);
+  return lca;
 };
